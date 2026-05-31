@@ -57,7 +57,7 @@ export async function getNextPokemon(unlockedList) {
 // Returns { currentLives, nextLifeTimeLeftMs }
 export function updateLivesTimer(state) {
   const MAX_LIVES = 5;
-  const RECOVERY_TIME_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+  const RECOVERY_TIME_MS = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
   // FOR TESTING: You can set a faster recovery here if needed, but 24 hours is the requirement.
   
   if (state.lives >= MAX_LIVES) {

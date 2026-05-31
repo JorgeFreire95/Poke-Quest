@@ -12,7 +12,7 @@ El diseño se enfoca en ofrecer una experiencia de usuario premium, fluida, anim
 *   **❤️ Sistema Inteligente de Vidas**: 
     *   Comienzas con un máximo de 5 vidas.
     *   Fallas o saltos decrementan tu vida.
-    *   Las vidas se recuperan de forma pasiva con un temporizador en segundo plano o de forma activa completando un anuncio publicitario patrocinado (simulado o a través de Google AdMob).
+    *   Las vidas se recuperan de forma pasiva cada 4 horas con un temporizador en segundo plano o de forma activa completando un anuncio publicitario patrocinado bonificado (simulado o a través de Google AdMob).
 *   **📖 Registro de Pokédex Interactivo**:
     *   Buscador rápido por nombre o número de ID nacional.
     *   Filtros inteligentes por estado de captura (*Atrapados*, *Pendientes*, *Todos*).
@@ -31,7 +31,7 @@ El diseño se enfoca en ofrecer una experiencia de usuario premium, fluida, anim
 *   **Lenguaje de Programación**: JavaScript ES6+ con modularización nativa por componentes.
 *   **Integración de API**: [PokeAPI](https://pokeapi.co/) como fuente de datos estructurada para consumir información oficial de los Pokémon.
 *   **Framework Híbrido**: [Capacitor JS](https://capacitorjs.com/) para compilar y ejecutar de forma nativa en plataformas móviles (Android / iOS) compartiendo el mismo código base.
-*   **Monetización y Servicios Nativos**: Capacitor AdMob Plugin para la entrega de anuncios de recompensa (*rewarded video ads*).
+*   **Monetización y Servicios Nativos**: Capacitor AdMob Plugin para la entrega de anuncios de recompensa (*rewarded video ads*), optimizando el espacio visual al omitir anuncios de tipo banner.
 *   **Estilos y Tipografía**: Google Fonts (*Outfit* para lecturas modernas y *Press Start 2P* para elementos visuales de estética pixel art) y FontAwesome 6 para iconografía.
 
 ---

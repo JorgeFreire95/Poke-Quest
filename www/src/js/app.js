@@ -387,59 +387,11 @@ async function initAdMob() {
 }
 
 async function showBannerAd() {
-  if (!isAdMobReady) {
-    renderSimulatedBanner();
-    return;
-  }
-  const screens = document.getElementById('screens-container');
-  if (screens) {
-    screens.style.marginBottom = '60px';
-  }
-  const { AdMob } = window.Capacitor.Plugins;
-  try {
-    await AdMob.showBanner({
-      adId: 'ca-app-pub-4096741408455583/5122862564',
-      adSize: 'ADAPTIVE_BANNER',
-      position: 'BOTTOM_CENTER',
-      margin: 0,
-      isTesting: false
-    });
-  } catch (e) {
-    console.warn('Failed to show AdMob banner:', e);
-  }
+  // Banner ad removed as requested
 }
 
 function renderSimulatedBanner() {
-  if (document.getElementById('simulated-banner-ad')) return;
-
-  const banner = document.createElement('div');
-  banner.id = 'simulated-banner-ad';
-  banner.style.position = 'absolute';
-  banner.style.bottom = '0';
-  banner.style.left = '0';
-  banner.style.width = '100%';
-  banner.style.height = '50px';
-  banner.style.backgroundColor = 'rgba(13, 17, 29, 0.95)';
-  banner.style.borderTop = '2px solid var(--secondary-color)';
-  banner.style.color = '#fff';
-  banner.style.display = 'flex';
-  banner.style.alignItems = 'center';
-  banner.style.justifyContent = 'center';
-  banner.style.fontSize = '0.75rem';
-  banner.style.zIndex = '999';
-  banner.innerHTML = `
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <span style="background-color: var(--secondary-color); color: #000; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.65rem;">AD</span>
-      <span>¡Atrápalos a todos en Poke-Quest!</span>
-    </div>
-  `;
-  document.getElementById('app-container').appendChild(banner);
-  
-  // Adjust margin bottom of screens container so they don't overlap with the banner
-  const screens = document.getElementById('screens-container');
-  if (screens) {
-    screens.style.marginBottom = '50px';
-  }
+  // Banner ad removed as requested
 }
 
 async function preloadRewardedAd() {
@@ -461,18 +413,21 @@ async function showAdMobRewarded() {
   }
   const { AdMob } = window.Capacitor.Plugins;
   
+  let rewardEarned = false;
+
   // Register reward listener
-  const rewardListener = await AdMob.addListener('rewardVideoAdRewarded', (reward) => {
+  const rewardListener = await AdMob.addListener('onRewardedVideoAdReward', (reward) => {
     console.log('AdMob Reward earned:', reward);
-    handleAdReward();
-    rewardListener.remove();
-    preloadRewardedAd();
+    rewardEarned = true;
   });
 
   // Register dismiss listener
-  const dismissListener = await AdMob.addListener('rewardVideoAdDismissed', () => {
+  const dismissListener = await AdMob.addListener('onRewardedVideoAdDismissed', () => {
     rewardListener.remove();
     dismissListener.remove();
+    if (rewardEarned) {
+      handleAdReward();
+    }
     preloadRewardedAd();
   });
 
@@ -681,7 +636,6 @@ function initEvents() {
 window.addEventListener('DOMContentLoaded', async () => {
   initEvents();
   await initAdMob();
-  showBannerAd();
 
   // Load PokeAPI listing first, cached in background
   try {

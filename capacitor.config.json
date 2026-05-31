@@ -1,0 +1,10 @@
+{
+  "appId": "com.pokequest.game",
+  "appName": "Poke-Quest",
+  "webDir": "www",
+  "plugins": {
+    "AdMob": {
+      "androidAppId": "ca-app-pub-4096741408455583~7749025900"
+    }
+  }
+}

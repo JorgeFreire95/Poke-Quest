@@ -4,7 +4,7 @@
   "description": "Poke-Quest - Guess the Pokémon from its shadow!",
   "main": "index.html",
   "scripts": {
-    "start": "npx local-web-server --directory www",
+    "start": "npx local-web-server --directory www --https",
     "dev": "npm start",
     "cap:sync": "npx cap sync"
   },

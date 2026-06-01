@@ -155,3 +155,42 @@ npm start
     npx cap open android
     ```
 3.  Compila, ejecuta o genera la firma APK directamente desde Android Studio.
+
+---
+
+## 👑 Membresía Premium y Pagos con Mercado Pago
+
+Poke-Quest cuenta con un sistema de membresía Premium opcional que otorga ventajas exclusivas:
+*   **Vidas infinitas** (`∞/5`) para jugar sin interrupciones.
+*   **Sin publicidad** al omitir anuncios o saltar Pokémon sin costo de vida.
+*   **Insignia dorada** de corona en el perfil de usuario.
+
+El sistema de cobro mensual ($2.000 CLP) está integrado con el SDK v2 oficial de **Mercado Pago**, estructurado en dos capas para garantizar la seguridad de tus credenciales:
+
+### 1. Frontend (Tokenización de Tarjeta)
+El cliente captura los datos de la tarjeta en un modal responsivo y los envía directamente a los servidores de Mercado Pago mediante su clave pública (configurada en `www/src/js/app.js`) para generar un token de tarjeta seguro (`card_tok_...`).
+
+### 2. Backend (Procesamiento de Pago Seguro)
+Para no exponer tu `Access Token` privado en la aplicación, el token de la tarjeta se envía a un servidor backend local en Node.js que realiza la solicitud de cargo real mediante la API de Pagos de Mercado Pago.
+
+#### Configuración del Servidor de Pagos
+1. Ve a la carpeta `server` e instala las dependencias:
+   ```bash
+   cd server
+   npm install
+   ```
+2. Crea o edita el archivo `server/.env` e introduce tus credenciales de Mercado Pago:
+   ```env
+   MERCADOPAGO_ACCESS_TOKEN=TU_ACCESS_TOKEN_SECRETO
+   PORT=3000
+   ```
+3. Inicia el servidor de pagos:
+   ```bash
+   npm start
+   ```
+
+#### Requisito de Seguridad SSL (HTTPS)
+El SDK oficial de Mercado Pago exige que la aplicación funcione bajo una conexión segura (HTTPS) para el uso de credenciales de producción (`APP_USR-...`).
+*   **Navegador**: Ejecuta el servidor local con soporte HTTPS (ya configurado en `npm run dev`) y accede a través de `https://localhost:8000`.
+*   **Móvil (Capacitor)**: Ya se configuró el esquema seguro (`"androidScheme": "https"`) en `capacitor.config.json` para emular un origen seguro nativo en Android.
+*   **Prueba Local Sin SSL**: Si deseas probar localmente sobre `http://`, reemplaza tus claves por credenciales de prueba (**Modo Sandbox** que inician con `TEST-`), las cuales no exigen certificados SSL.

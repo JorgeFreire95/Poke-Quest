@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "992083753190",
+    "project_id": "poke-quest-c66ad",
+    "storage_bucket": "poke-quest-c66ad.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992083753190:android:86a6252f3b1bd89200e327",
+        "android_client_info": {
+          "package_name": "com.pokequest.game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEvZu8QtKAIFWroHHboFo1MXFEB-GDeQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -24,8 +24,14 @@
       </button>
       
       <!-- Mini Brand -->
-      <div class="hud-brand">
-        <span class="poke-brand-text">Poke-<span class="highlight">Quest</span></span>
+      <div class="hud-brand-wrapper" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div class="hud-brand">
+          <span class="poke-brand-text">Poke-<span class="highlight">Quest</span></span>
+        </div>
+        <div id="hud-user-badge" class="hud-user-badge hidden" style="font-size: 0.65rem; color: var(--secondary-color); font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 4px; margin-top: 2px; background: rgba(254, 203, 5, 0.15); padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(254, 203, 5, 0.25);">
+          <i class="fa-solid fa-circle-user" style="font-size: 0.7rem;"></i>
+          <span id="hud-username-text"></span>
+        </div>
       </div>
 
       <!-- Lives & Recovery Status -->
@@ -193,8 +199,8 @@
             <!-- Login Form -->
             <form id="form-login" class="auth-form active">
               <div class="input-group">
-                <label for="login-username"><i class="fa-solid fa-user"></i> Nombre de Usuario</label>
-                <input type="text" id="login-username" placeholder="Tu usuario..." required>
+                <label for="login-email"><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                <input type="email" id="login-email" placeholder="Tu correo..." required>
               </div>
               <div class="input-group">
                 <label for="login-password"><i class="fa-solid fa-key"></i> Contraseña</label>
@@ -208,6 +214,10 @@
               <div class="input-group">
                 <label for="register-username"><i class="fa-solid fa-user"></i> Elige un Usuario</label>
                 <input type="text" id="register-username" placeholder="Tu usuario..." required>
+              </div>
+              <div class="input-group">
+                <label for="register-email"><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                <input type="email" id="register-email" placeholder="Tu correo..." required>
               </div>
               <div class="input-group">
                 <label for="register-password"><i class="fa-solid fa-key"></i> Contraseña</label>
@@ -243,6 +253,31 @@
               <div class="profile-stat-box">
                 <span class="value" id="stats-accuracy">0%</span>
                 <span class="label">Precisión</span>
+            </div>
+          </div>
+
+            <!-- Premium Membership Status Card -->
+            <div id="premium-membership-section" class="premium-status-section" style="width:100%;"></div>
+
+            <!-- Friends Section -->
+            <div class="friends-section">
+              <h4 class="friends-title"><i class="fa-solid fa-users text-blue"></i> Mis Amigos</h4>
+              
+              <form id="form-add-friend" class="friends-search-container" autocomplete="off" onsubmit="return false;">
+                <input type="text" id="friend-username-input" placeholder="Agregar amigo por usuario..." required>
+                <button type="submit" id="btn-add-friend" title="Agregar Amigo">
+                  <i class="fa-solid fa-user-plus"></i>
+                </button>
+              </form>
+
+              <!-- Friend Requests Section -->
+              <div id="friend-requests-section" class="friend-requests-section hidden">
+                <h5 class="requests-title"><i class="fa-solid fa-bell text-orange"></i> Solicitudes Pendientes</h5>
+                <div id="friend-requests-list" class="requests-list-container"></div>
+              </div>
+
+              <div id="friends-list" class="friends-list-container">
+                <p class="friends-empty-message">Aún no tienes amigos agregados.</p>
               </div>
             </div>
 
@@ -314,14 +349,71 @@
       </div>
     </div>
 
+    <!-- 3. Premium Payment Modal -->
+    <div id="modal-payment" class="modal-overlay hidden">
+      <div class="payment-card auth-card" style="width: 100%; max-width: 360px; position: relative;">
+        <button id="btn-close-payment" class="detail-close-btn" style="position: absolute; top: 12px; right: 12px; border: none; background: rgba(0,0,0,0.3); color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+        <div class="payment-header" style="text-align: center; margin-bottom: 20px;">
+          <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 8px;"><i class="fa-solid fa-crown text-yellow"></i> Pase Premium</h3>
+          <p class="auth-desc" style="margin-bottom: 0;">Disfruta de ventajas exclusivas e ilimitadas</p>
+        </div>
+        
+        <div id="payment-form-container">
+          <div class="payment-advantages" style="background: rgba(251, 191, 36, 0.05); border: 1px dashed rgba(251, 191, 36, 0.2); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; font-size: 0.85rem;">
+            <div class="advantage-item" style="display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-infinity text-yellow" style="width: 16px;"></i> <span><b>Vidas Infinitas</b>: Juega sin límites ni esperas</span></div>
+            <div class="advantage-item" style="display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-ban text-red" style="width: 16px;"></i> <span><b>Sin Anuncios</b>: Olvídate de los videos para recargar</span></div>
+            <div class="advantage-item" style="display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-star text-yellow" style="width: 16px;"></i> <span><b>Insignia Especial</b>: Muestra tu rango Premium</span></div>
+          </div>
+
+          <form id="form-payment" class="auth-form active">
+            <div class="input-group">
+              <label for="card-name"><i class="fa-solid fa-user"></i> Nombre del Titular</label>
+              <input type="text" id="card-name" placeholder="Ej. Ash Ketchum" required>
+            </div>
+            <div class="input-group">
+              <label for="card-number"><i class="fa-solid fa-credit-card"></i> Número de Tarjeta</label>
+              <input type="text" id="card-number" placeholder="4000 1234 5678 9010" maxlength="19" required autocomplete="off">
+            </div>
+            <div class="input-group">
+              <label for="card-rut"><i class="fa-solid fa-id-card"></i> RUT del Titular</label>
+              <input type="text" id="card-rut" placeholder="Ej. 12345678-K" required autocomplete="off">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="input-group">
+                <label for="card-expiry"><i class="fa-solid fa-calendar"></i> Vence</label>
+                <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" required autocomplete="off">
+              </div>
+              <div class="input-group">
+                <label for="card-cvv"><i class="fa-solid fa-shield"></i> CVV</label>
+                <input type="password" id="card-cvv" placeholder="123" maxlength="3" required autocomplete="off">
+              </div>
+            </div>
+            <button type="submit" class="auth-submit-btn" style="margin-top: 16px; background: linear-gradient(135deg, #fbbf24, #d97706); box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);">Activar por $2.000 CLP/mes</button>
+          </form>
+        </div>
+
+        <div id="payment-processing" class="hidden" style="text-align: center; padding: 30px 10px;">
+          <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 3rem; color: #fbbf24; margin-bottom: 16px;"></i>
+          <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 6px;">Procesando pago seguro</h4>
+          <p class="auth-desc">Validando datos con tu entidad bancaria...</p>
+        </div>
+
+        <div id="payment-success" class="hidden" style="text-align: center; padding: 30px 10px;">
+          <i class="fa-solid fa-crown" style="font-size: 3.5rem; color: #fbbf24; margin-bottom: 16px; animation: heartPulse 0.6s ease-in-out infinite alternate;"></i>
+          <h4 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 8px;">¡Compra Completada!</h4>
+          <p class="auth-desc" style="margin-bottom: 20px;">Felicidades, ya tienes acceso a todos los privilegios Premium.</p>
+          <button type="button" id="btn-payment-done" class="auth-submit-btn" style="width: 100%; margin-top: 0;">¡A Jugar!</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Global Toast notification system -->
     <div id="toast-container"></div>
 
   </div>
 
-  <!-- Capacitor Scripts (linked if running on device, falls back to web) -->
-  <script src="cordova.js" defer></script>
-  
+  <!-- Mercado Pago SDK v2 -->
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
   <!-- App JavaScript Modules -->
   <script src="src/js/auth.js" type="module"></script>
   <script src="src/js/pokedex.js" type="module"></script>

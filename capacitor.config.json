@@ -6,5 +6,9 @@
     "AdMob": {
       "androidAppId": "ca-app-pub-4096741408455583~7749025900"
     }
+  },
+  "server": {
+    "androidScheme": "https",
+    "hostname": "localhost"
   }
 }
